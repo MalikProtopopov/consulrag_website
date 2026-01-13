@@ -22,7 +22,7 @@ export const SectionHeader = ({
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+      transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] as const }}
       className={`mb-16 lg:mb-20 ${className}`}
     >
       {/* Section label with line */}

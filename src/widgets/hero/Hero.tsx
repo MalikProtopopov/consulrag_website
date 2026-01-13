@@ -34,7 +34,7 @@ const AnimatedCounter = ({
     const timeout = setTimeout(() => {
       const controls = animate(0, countTo, {
         duration: 1.5,
-        ease: [0.4, 0, 0.2, 1],
+        ease: [0.4, 0, 0.2, 1] as const,
         onUpdate: (latest) => {
           setDisplayValue(Math.round(latest).toString());
         },
@@ -72,7 +72,7 @@ const letterVariants = {
     opacity: 1,
     transition: {
       duration: 0.5,
-      ease: [0.4, 0, 0.2, 1],
+      ease: [0.4, 0, 0.2, 1] as const,
     },
   },
 };
@@ -199,7 +199,7 @@ export const Hero = () => {
                     transition={{ 
                       duration: 0.5, 
                       delay: 0.7 + index * 0.15,
-                      ease: [0.4, 0, 0.2, 1]
+                      ease: [0.4, 0, 0.2, 1] as const
                     }}
                     whileHover={{ x: 4 }}
                     className="group cursor-default"

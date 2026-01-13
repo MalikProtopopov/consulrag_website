@@ -174,7 +174,7 @@ export default function DocsPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+            transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] as const }}
             className="mb-20 text-center"
           >
             <div className="flex items-center justify-center gap-4 mb-8">
