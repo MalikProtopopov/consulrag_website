@@ -190,12 +190,11 @@ export default function DocsPage() {
               Всё, что нужно для создания, настройки и интеграции вашего AI-консультанта
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
-              <a href="https://parmenid.tech/dashboard" target="_blank" rel="noopener noreferrer">
+              <Link href={ROUTES.REQUEST}>
                 <Button size="lg" className="group">
-                  Открыть Dashboard
-                  <ExternalLink className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                  Оставить заявку
                 </Button>
-              </a>
+              </Link>
               <a href="#api">
                 <Button variant="secondary" size="lg">
                   API Reference
