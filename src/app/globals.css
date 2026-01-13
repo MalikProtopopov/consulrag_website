@@ -1,66 +1,125 @@
 @import "tailwindcss";
 
 :root {
-  /* Фоны */
-  --color-bg-primary: #0c0c0e;
-  --color-bg-secondary: #151518;
-  --color-bg-hover: #1d1d21;
+  /* Brand Colors - Hot Pink */
+  --color-brand-primary: #FF006E;
+  --color-brand-primary-hover: #E00062;
+  --color-brand-secondary: #EC4899;
+  --color-brand-secondary-hover: #DB2777;
 
-  /* Границы */
-  --color-border: #222225;
+  /* Background Colors - Light Theme */
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #fafafa;
+  --color-bg-elevated: #f5f5f5;
+  --color-bg-card: #ffffff;
+  --color-bg-hover: #f5f5f5;
 
-  /* Текст */
-  --color-text-primary: #ffffff;
-  --color-text-secondary: #b0b0b5;
-  --color-text-muted: #71717a;
+  /* Text Colors */
+  --color-text-primary: #0a0a0a;
+  --color-text-secondary: #525252;
+  --color-text-muted: #a3a3a3;
 
-  /* Акценты */
-  --color-accent-primary: #ffcd33;
-  --color-accent-hover: #ffd84d;
-  --color-accent-contrast: #332800;
+  /* Border Colors */
+  --color-border: #e5e5e5;
+  --color-border-hover: #d4d4d4;
+  --color-border-focus: #FF006E;
 
-  /* Семантические */
-  --color-success: #4ade80;
-  --color-warning: #f59e0b;
+  /* Semantic Colors */
+  --color-success: #22c55e;
+  --color-warning: #eab308;
   --color-error: #ef4444;
+
+  /* Special Colors */
+  --color-glow: rgba(255, 0, 110, 0.1);
+
+  /* Legacy aliases for compatibility */
+  --color-accent-primary: var(--color-brand-primary);
+  --color-accent-hover: var(--color-brand-primary-hover);
+  --color-accent-contrast: #ffffff;
+
+  /* Typography */
+  --font-heading: var(--font-playfair), Georgia, serif;
+  --font-body: var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), 'SF Mono', 'Consolas', monospace;
+
+  /* Transitions */
+  --transition-fast: 150ms;
+  --transition-normal: 250ms;
+  --transition-slow: 600ms;
+
+  /* Easing */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
 }
 
 @theme inline {
-  /* Фоны */
+  /* Background */
   --color-bg-primary: var(--color-bg-primary);
   --color-bg-secondary: var(--color-bg-secondary);
+  --color-bg-elevated: var(--color-bg-elevated);
+  --color-bg-card: var(--color-bg-card);
   --color-bg-hover: var(--color-bg-hover);
 
-  /* Границы */
+  /* Border */
   --color-border: var(--color-border);
+  --color-border-hover: var(--color-border-hover);
+  --color-border-focus: var(--color-border-focus);
 
-  /* Текст */
+  /* Text */
   --color-text-primary: var(--color-text-primary);
   --color-text-secondary: var(--color-text-secondary);
   --color-text-muted: var(--color-text-muted);
 
-  /* Акценты */
+  /* Accent (brand) */
   --color-accent-primary: var(--color-accent-primary);
   --color-accent-hover: var(--color-accent-hover);
   --color-accent-contrast: var(--color-accent-contrast);
 
-  /* Семантические */
+  /* Brand */
+  --color-brand-primary: var(--color-brand-primary);
+  --color-brand-primary-hover: var(--color-brand-primary-hover);
+  --color-brand-secondary: var(--color-brand-secondary);
+
+  /* Semantic */
   --color-success: var(--color-success);
   --color-warning: var(--color-warning);
   --color-error: var(--color-error);
 
   /* Fonts */
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-body);
+  --font-mono: var(--font-mono);
+  --font-heading: var(--font-heading);
 }
 
 body {
   background: var(--color-bg-primary);
   color: var(--color-text-primary);
-  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  font-family: var(--font-body), Arial, Helvetica, sans-serif;
 }
 
-/* Scroll styles */
+/* Heading font utility */
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+/* Mono font utility */
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Focus states */
+:focus-visible {
+  outline: 2px solid var(--color-brand-primary);
+  outline-offset: 2px;
+}
+
+/* Scroll styles - Light theme */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -76,5 +135,15 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-text-muted);
+  background: var(--color-border-hover);
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

@@ -1,21 +1,15 @@
 "use client";
 
 import { Send, Globe, MessageSquare, Mail, Code } from "lucide-react";
+import { motion } from "framer-motion";
 
-import {
-  Container,
-  Card,
-  StaggerContainer,
-  StaggerHoverItem,
-  FadeIn,
-} from "@/shared/ui";
+import { Container, SectionHeader, Card } from "@/shared/ui";
 
 interface Integration {
   icon: typeof Send;
   name: string;
   status: "ready" | "soon";
   description: string;
-  color: string;
 }
 
 const integrations: Integration[] = [
@@ -24,89 +18,102 @@ const integrations: Integration[] = [
     name: "Telegram",
     status: "ready",
     description: "Бот в Telegram за 1 клик, webhook автоматический",
-    color: "text-blue-400",
   },
   {
     icon: Globe,
     name: "Web Chat",
     status: "ready",
     description: "Встраиваемый чат для вашего сайта (SDK или iframe)",
-    color: "text-green-400",
   },
   {
     icon: MessageSquare,
     name: "WhatsApp",
     status: "soon",
     description: "Интеграция планируется в Q1 2026",
-    color: "text-emerald-400",
   },
   {
     icon: Mail,
     name: "Email",
     status: "soon",
     description: "Автоответы на письма на базе RAG",
-    color: "text-orange-400",
   },
   {
     icon: Code,
     name: "REST API",
     status: "ready",
     description: "Полный API для custom интеграций",
-    color: "text-purple-400",
   },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.4, 0, 0.2, 1] },
+  },
+};
+
 export const Integrations = () => {
   return (
-    <section className="py-20 bg-bg-secondary" id="integrations">
+    <section className="py-24 lg:py-32" id="integrations">
       <Container>
-        <FadeIn className="text-center">
-          <h2 className="text-3xl font-bold text-text-primary md:text-4xl">
-            Работает везде, где ваши клиенты
-          </h2>
-          <p className="mt-4 text-lg text-text-secondary">
-            Подключайте каналы коммуникации в пару кликов
-          </p>
-        </FadeIn>
+        <SectionHeader
+          number="04"
+          label="Интеграции"
+          title="Работает везде"
+          description="Подключайте каналы коммуникации в пару кликов"
+        />
 
-        <StaggerContainer className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-5">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-6"
+        >
           {integrations.map((integration) => (
-            <StaggerHoverItem key={integration.name}>
+            <motion.div key={integration.name} variants={itemVariants}>
               <Card
-                variant="bordered"
-                className="group relative flex h-full flex-col items-center text-center"
+                variant="interactive"
+                className="h-full flex flex-col items-center text-center relative pt-8"
               >
                 {/* Status badge */}
                 <div
-                  className={`absolute -top-2 right-4 rounded-full px-2 py-0.5 text-xs font-medium ${
+                  className={`absolute top-3 right-3 rounded-full px-2 py-0.5 text-[10px] font-mono uppercase tracking-wider ${
                     integration.status === "ready"
-                      ? "bg-success/20 text-success"
-                      : "bg-accent-primary/20 text-accent-primary"
+                      ? "bg-success/10 text-success"
+                      : "bg-brand-primary/10 text-brand-primary"
                   }`}
                 >
-                  {integration.status === "ready" ? "✓ Готово" : "🚀 Скоро"}
+                  {integration.status === "ready" ? "Готово" : "Скоро"}
                 </div>
 
                 {/* Icon */}
-                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-bg-hover transition-colors group-hover:bg-bg-primary">
-                  <integration.icon
-                    className={`h-8 w-8 ${integration.color}`}
-                  />
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-bg-elevated mb-4">
+                  <integration.icon className="h-7 w-7 text-brand-primary" />
                 </div>
 
                 {/* Content */}
-                <h3 className="mt-4 text-lg font-semibold text-text-primary">
+                <h3 className="font-heading text-lg text-text-primary mb-2">
                   {integration.name}
                 </h3>
-                <p className="mt-2 text-sm text-text-secondary">
+                <p className="text-xs lg:text-sm text-text-secondary leading-relaxed">
                   {integration.description}
                 </p>
               </Card>
-            </StaggerHoverItem>
+            </motion.div>
           ))}
-        </StaggerContainer>
+        </motion.div>
       </Container>
     </section>
   );
 };
-

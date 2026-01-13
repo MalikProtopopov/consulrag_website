@@ -8,7 +8,7 @@ import { RequestForm } from "@/features/request-form";
 import { ROUTES } from "@/shared/config";
 
 export const metadata: Metadata = {
-  title: "Оставить заявку — Parmenid",
+  title: "Оставить заявку — parmenid ai",
   description:
     "Оставьте заявку на демонстрацию AI Avatar Platform. Мы свяжемся с вами в течение часа.",
 };
@@ -31,7 +31,7 @@ export default function RequestPage() {
           {/* Form Card */}
           <Card className="mx-auto max-w-lg">
             <div className="mb-8 text-center">
-              <h1 className="text-2xl font-bold text-text-primary md:text-3xl">
+              <h1 className="font-heading text-2xl text-text-primary md:text-3xl">
                 Оставить заявку
               </h1>
               <p className="mt-2 text-text-secondary">
@@ -48,7 +48,7 @@ export default function RequestPage() {
               Или напишите нам напрямую:{" "}
               <a
                 href="mailto:work@parmenid.tech"
-                className="text-accent-primary hover:text-accent-hover"
+                className="text-brand-primary hover:text-brand-primary-hover"
               >
                 work@parmenid.tech
               </a>

@@ -1,83 +1,67 @@
 "use client";
 
-import { Container, Card, FadeIn } from "@/shared/ui";
+import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
+
+import { Container, Card, SectionHeader } from "@/shared/ui";
 import { RequestForm } from "@/features/request-form";
 
 export const FinalCTA = () => {
   return (
-    <section className="py-20" id="contact">
-      <Container size="md">
-        <FadeIn>
-          <Card className="overflow-hidden">
-            <div className="grid gap-8 lg:grid-cols-2">
+    <section className="py-24 lg:py-32 bg-bg-secondary" id="contact">
+      <Container>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <Card className="overflow-hidden bg-bg-primary p-0">
+            <div className="grid lg:grid-cols-2">
               {/* Left - Text */}
-              <div className="flex flex-col justify-center">
-                <h2 className="text-3xl font-bold text-text-primary md:text-4xl">
-                  Готовы к демо?
+              <div className="flex flex-col justify-center p-8 lg:p-12">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-8 h-px bg-brand-primary" />
+                  <span className="font-mono text-xs uppercase tracking-[0.2em] text-text-muted">
+                    07 — Связь
+                  </span>
+                </div>
+
+                <h2 className="font-heading text-3xl lg:text-4xl xl:text-5xl text-text-primary mb-4">
+                  Готовы к демо<span className="text-brand-primary">?</span>
                 </h2>
-                <p className="mt-4 text-lg text-text-secondary">
+
+                <p className="text-lg text-text-secondary mb-8 leading-relaxed">
                   Оставьте заявку, и мы покажем, как AI Avatar Platform поможет
                   вашему бизнесу автоматизировать общение с клиентами.
                 </p>
-                <ul className="mt-6 space-y-3">
-                  <li className="flex items-center gap-3 text-text-secondary">
-                    <svg
-                      className="h-5 w-5 flex-shrink-0 text-success"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
+
+                <ul className="space-y-4">
+                  {[
+                    "Персональная демонстрация",
+                    "Ответим на все вопросы",
+                    "Свяжемся в течение 1 часа",
+                  ].map((item, i) => (
+                    <li
+                      key={i}
+                      className="flex items-center gap-3 text-text-secondary"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M5 13l4 4L19 7"
-                      />
-                    </svg>
-                    Персональная демонстрация
-                  </li>
-                  <li className="flex items-center gap-3 text-text-secondary">
-                    <svg
-                      className="h-5 w-5 flex-shrink-0 text-success"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M5 13l4 4L19 7"
-                      />
-                    </svg>
-                    Ответим на все вопросы
-                  </li>
-                  <li className="flex items-center gap-3 text-text-secondary">
-                    <svg
-                      className="h-5 w-5 flex-shrink-0 text-success"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M5 13l4 4L19 7"
-                      />
-                    </svg>
-                    Свяжемся в течение 1 часа
-                  </li>
+                      <div className="flex h-6 w-6 items-center justify-center rounded-full bg-success/10">
+                        <ArrowRight className="h-3 w-3 text-success" />
+                      </div>
+                      {item}
+                    </li>
+                  ))}
                 </ul>
               </div>
 
               {/* Right - Form */}
-              <div className="rounded-xl bg-bg-primary p-6">
+              <div className="bg-bg-secondary p-8 lg:p-12">
                 <RequestForm />
               </div>
             </div>
           </Card>
-        </FadeIn>
+        </motion.div>
       </Container>
     </section>
   );

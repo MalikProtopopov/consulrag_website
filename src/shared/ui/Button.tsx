@@ -2,8 +2,8 @@ import { forwardRef, type ButtonHTMLAttributes } from "react";
 
 import { cn } from "@/shared/lib";
 
-type ButtonVariant = "primary" | "secondary" | "ghost";
-type ButtonSize = "sm" | "md" | "lg";
+type ButtonVariant = "primary" | "secondary" | "ghost" | "danger";
+type ButtonSize = "sm" | "md" | "lg" | "xl";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
@@ -13,17 +13,20 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    "bg-accent-primary text-accent-contrast hover:bg-accent-hover focus:ring-accent-primary",
+    "bg-brand-primary text-white hover:bg-brand-primary-hover active:scale-[0.98] focus:ring-brand-primary shadow-sm hover:shadow-md",
   secondary:
-    "bg-bg-secondary text-text-primary border border-border hover:bg-bg-hover focus:ring-border",
+    "bg-transparent text-text-primary border border-border hover:bg-bg-elevated active:scale-[0.98] focus:ring-border",
   ghost:
-    "bg-transparent text-text-primary hover:bg-bg-hover focus:ring-border",
+    "bg-transparent text-text-secondary hover:bg-bg-elevated hover:text-text-primary focus:ring-border",
+  danger:
+    "bg-error text-white hover:bg-error/90 active:scale-[0.98] focus:ring-error",
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
-  sm: "px-3 py-1.5 text-sm",
-  md: "px-4 py-2 text-base",
-  lg: "px-6 py-3 text-lg",
+  sm: "h-8 px-4 text-sm rounded-md",
+  md: "h-10 px-5 text-sm rounded-lg",
+  lg: "h-12 px-6 text-base rounded-lg",
+  xl: "h-14 px-8 text-base rounded-xl",
 };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -43,7 +46,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       <button
         ref={ref}
         className={cn(
-          "inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-bg-primary disabled:cursor-not-allowed disabled:opacity-50",
+          "inline-flex items-center justify-center gap-2 font-medium transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-bg-primary disabled:cursor-not-allowed disabled:opacity-50 hover:scale-[1.02]",
           variantStyles[variant],
           sizeStyles[size],
           className
@@ -80,4 +83,3 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 );
 
 Button.displayName = "Button";
-

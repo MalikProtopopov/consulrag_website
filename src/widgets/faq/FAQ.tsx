@@ -3,15 +3,9 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
-import {
-  Container,
-  Button,
-  FadeIn,
-  StaggerContainer,
-  StaggerItem,
-  AccordionContent,
-} from "@/shared/ui";
+import { Container, Button, SectionHeader } from "@/shared/ui";
 import { ROUTES } from "@/shared/config";
 
 interface FAQItem {
@@ -43,7 +37,7 @@ const faqItems: FAQItem[] = [
   {
     question: "Как работает безопасность данных?",
     answer:
-      "Ваши документы хранятся на защищённых серверах (EU data centers). Не используются для обучения других моделей. GDPR compliant. Все данные шифруются at-rest и in-transit (SSL/TLS).",
+      "Ваши документы хранятся на защищённых серверах в России. Не используются для обучения других моделей. Соответствуем 152-ФЗ. Все данные шифруются при хранении и передаче (SSL/TLS).",
   },
   {
     question: "Какие LLM модели используются?",
@@ -66,18 +60,27 @@ const FAQAccordionItem = ({
   item,
   isOpen,
   onToggle,
+  index,
 }: {
   item: FAQItem;
   isOpen: boolean;
   onToggle: () => void;
+  index: number;
 }) => {
   return (
-    <div className="overflow-hidden rounded-xl border border-border bg-bg-secondary">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.4, delay: index * 0.05 }}
+      className="border-b border-border"
+    >
       <button
         onClick={onToggle}
-        className="flex w-full items-center justify-between gap-4 px-6 py-4 text-left transition-colors hover:bg-bg-hover"
+        className="flex w-full items-center justify-between gap-4 py-5 text-left transition-colors hover:text-brand-primary"
+        aria-expanded={isOpen}
       >
-        <span className="text-base font-medium text-text-primary">
+        <span className="font-heading text-lg text-text-primary group-hover:text-brand-primary">
           {item.question}
         </span>
         <ChevronDown
@@ -86,12 +89,22 @@ const FAQAccordionItem = ({
           }`}
         />
       </button>
-      <AccordionContent isOpen={isOpen}>
-        <div className="border-t border-border px-6 py-4">
-          <p className="text-text-secondary">{item.answer}</p>
-        </div>
-      </AccordionContent>
-    </div>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+            className="overflow-hidden"
+          >
+            <p className="pb-5 text-text-secondary leading-relaxed">
+              {item.answer}
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
 };
 
@@ -103,39 +116,42 @@ export const FAQ = () => {
   };
 
   return (
-    <section className="py-20" id="faq">
-      <Container>
-        <FadeIn className="text-center">
-          <h2 className="text-3xl font-bold text-text-primary md:text-4xl">
-            Часто задаваемые вопросы
-          </h2>
-          <p className="mt-4 text-lg text-text-secondary">
-            Ответы на популярные вопросы о платформе
-          </p>
-        </FadeIn>
+    <section className="py-24 lg:py-32" id="faq">
+      <Container size="md">
+        <SectionHeader
+          number="06"
+          label="FAQ"
+          title="Частые вопросы"
+          description="Ответы на популярные вопросы о платформе"
+        />
 
-        <StaggerContainer className="mx-auto mt-12 max-w-3xl space-y-4">
+        <div className="border-t border-border">
           {faqItems.map((item, index) => (
-            <StaggerItem key={index}>
-              <FAQAccordionItem
-                item={item}
-                isOpen={openIndex === index}
-                onToggle={() => handleToggle(index)}
-              />
-            </StaggerItem>
+            <FAQAccordionItem
+              key={index}
+              item={item}
+              index={index}
+              isOpen={openIndex === index}
+              onToggle={() => handleToggle(index)}
+            />
           ))}
-        </StaggerContainer>
+        </div>
 
-        <FadeIn delay={0.3} className="mt-12 text-center">
-          <p className="text-text-secondary">Не нашли ответ?</p>
-          <Link href={ROUTES.REQUEST} className="mt-4 inline-block">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3 }}
+          className="mt-12 text-center"
+        >
+          <p className="text-text-secondary mb-4">Не нашли ответ?</p>
+          <Link href={ROUTES.REQUEST}>
             <Button variant="secondary" size="md">
               Связаться с нами
             </Button>
           </Link>
-        </FadeIn>
+        </motion.div>
       </Container>
     </section>
   );
 };
-

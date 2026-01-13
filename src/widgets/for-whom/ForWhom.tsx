@@ -1,14 +1,9 @@
 "use client";
 
 import { Home, ShoppingCart, Briefcase, GraduationCap } from "lucide-react";
+import { motion } from "framer-motion";
 
-import {
-  Container,
-  Card,
-  FadeIn,
-  StaggerContainer,
-  StaggerHoverItem,
-} from "@/shared/ui";
+import { Container, SectionHeader, Card } from "@/shared/ui";
 
 const segments = [
   {
@@ -19,7 +14,6 @@ const segments = [
       "Автоматическая квалификация клиентов",
       "Ответы на вопросы о проектах",
     ],
-    color: "text-blue-400",
   },
   {
     icon: ShoppingCart,
@@ -29,7 +23,6 @@ const segments = [
       "Быстрые ответы на FAQ",
       "Клиенты не уходят к конкурентам",
     ],
-    color: "text-green-400",
   },
   {
     icon: Briefcase,
@@ -39,7 +32,6 @@ const segments = [
       "API-first подход",
       "Интеграция в существующие системы",
     ],
-    color: "text-purple-400",
   },
   {
     icon: GraduationCap,
@@ -49,65 +41,73 @@ const segments = [
       "Масштабируйте себя",
       "Ученики не ждут ответов",
     ],
-    color: "text-orange-400",
   },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.4, 0, 0.2, 1] },
+  },
+};
+
 export const ForWhom = () => {
   return (
-    <section className="bg-bg-secondary py-20" id="for-whom">
+    <section className="py-24 lg:py-32" id="for-whom">
       <Container>
-        <FadeIn className="text-center">
-          <h2 className="text-3xl font-bold text-text-primary md:text-4xl">
-            Идеально подходит для
-          </h2>
-          <p className="mt-4 text-lg text-text-secondary">
-            Решения для разных индустрий и задач
-          </p>
-        </FadeIn>
+        <SectionHeader
+          number="02"
+          label="Аудитория"
+          title="Идеально подходит для"
+          description="Решения для разных индустрий и задач"
+        />
 
-        <StaggerContainer className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
+        >
           {segments.map((segment) => (
-            <StaggerHoverItem key={segment.title} scale={1.05}>
-              <Card className="h-full">
+            <motion.div key={segment.title} variants={itemVariants}>
+              <Card variant="interactive" className="h-full">
                 {/* Icon */}
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-bg-hover transition-colors">
-                  <segment.icon className={`h-6 w-6 ${segment.color}`} />
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-bg-elevated mb-5">
+                  <segment.icon className="h-6 w-6 text-brand-primary" />
                 </div>
 
                 {/* Title */}
-                <h3 className="mt-4 text-lg font-semibold text-text-primary">
+                <h3 className="font-heading text-xl lg:text-2xl text-text-primary mb-4">
                   {segment.title}
                 </h3>
 
                 {/* Benefits */}
-                <ul className="mt-4 space-y-2">
+                <ul className="space-y-3">
                   {segment.benefits.map((benefit) => (
                     <li
                       key={benefit}
-                      className="flex items-start gap-2 text-sm text-text-secondary"
+                      className="flex items-start gap-3 text-sm text-text-secondary"
                     >
-                      <svg
-                        className="mt-0.5 h-4 w-4 flex-shrink-0 text-success"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M5 13l4 4L19 7"
-                        />
-                      </svg>
+                      <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-brand-primary flex-shrink-0" />
                       {benefit}
                     </li>
                   ))}
                 </ul>
               </Card>
-            </StaggerHoverItem>
+            </motion.div>
           ))}
-        </StaggerContainer>
+        </motion.div>
       </Container>
     </section>
   );

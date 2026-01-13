@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ArrowRight } from "lucide-react";
 
 import { Button, Container } from "@/shared/ui";
 import { ROUTES, NAV_LINKS } from "@/shared/config";
@@ -12,26 +12,23 @@ export const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-bg-primary/80 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-border bg-bg-primary/95 backdrop-blur-md">
       <Container>
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link href={ROUTES.HOME} className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent-primary">
-              <span className="text-lg font-bold text-accent-contrast">P</span>
-            </div>
-            <span className="text-lg font-semibold text-text-primary">
-              Parmenid
-            </span>
-          </Link>
+<Link href={ROUTES.HOME} className="group">
+              <span className="text-xl font-bold text-text-primary tracking-tight">
+                parmenid ai
+              </span>
+            </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden items-center gap-6 md:flex">
+          <nav className="hidden items-center gap-8 md:flex">
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm text-text-secondary transition-colors hover:text-text-primary"
+                className="text-sm font-medium text-text-secondary transition-colors hover:text-brand-primary"
               >
                 {link.label}
               </Link>
@@ -41,15 +38,19 @@ export const Header = () => {
           {/* Desktop CTA */}
           <div className="hidden items-center gap-3 md:flex">
             <Link href={ROUTES.REQUEST}>
-              <Button size="sm">Получить демо</Button>
+              <Button size="sm" className="group">
+                Получить демо
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+              </Button>
             </Link>
           </div>
 
           {/* Mobile Menu Toggle */}
           <button
-            className="flex h-10 w-10 items-center justify-center rounded-lg text-text-primary hover:bg-bg-hover md:hidden"
+            className="flex h-10 w-10 items-center justify-center rounded-lg text-text-primary hover:bg-bg-elevated md:hidden transition-colors"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label={isMobileMenuOpen ? "Закрыть меню" : "Открыть меню"}
+            aria-expanded={isMobileMenuOpen}
           >
             {isMobileMenuOpen ? (
               <X className="h-5 w-5" />
@@ -63,27 +64,31 @@ export const Header = () => {
         <div
           className={cn(
             "overflow-hidden transition-all duration-300 md:hidden",
-            isMobileMenuOpen ? "max-h-64 pb-4" : "max-h-0"
+            isMobileMenuOpen ? "max-h-80 pb-6" : "max-h-0"
           )}
         >
-          <nav className="flex flex-col gap-2 pt-2">
+          <nav className="flex flex-col gap-1 pt-4">
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="rounded-lg px-3 py-2 text-text-secondary transition-colors hover:bg-bg-hover hover:text-text-primary"
+                className="rounded-lg px-4 py-3 text-text-secondary transition-colors hover:bg-bg-elevated hover:text-text-primary font-medium"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {link.label}
               </Link>
             ))}
-            <Link href={ROUTES.REQUEST} onClick={() => setIsMobileMenuOpen(false)}>
-              <Button className="mt-2 w-full">Получить демо</Button>
-            </Link>
+            <div className="pt-4 px-4">
+              <Link href={ROUTES.REQUEST} onClick={() => setIsMobileMenuOpen(false)}>
+                <Button className="w-full">
+                  Получить демо
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+              </Link>
+            </div>
           </nav>
         </div>
       </Container>
     </header>
   );
 };
-

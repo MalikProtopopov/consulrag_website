@@ -2,15 +2,9 @@
 
 import Link from "next/link";
 import { Check, X, Sparkles } from "lucide-react";
+import { motion } from "framer-motion";
 
-import {
-  Container,
-  Card,
-  Button,
-  StaggerContainer,
-  StaggerHoverItem,
-  FadeIn,
-} from "@/shared/ui";
+import { Container, Card, Button, SectionHeader } from "@/shared/ui";
 import { ROUTES } from "@/shared/config";
 
 interface PlanFeature {
@@ -114,34 +108,55 @@ const plans: Plan[] = [
   },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.08 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.4, 0, 0.2, 1] },
+  },
+};
+
 export const Pricing = () => {
   return (
-    <section className="py-20" id="pricing">
+    <section className="py-24 lg:py-32 bg-bg-secondary" id="pricing">
       <Container>
-        <FadeIn className="text-center">
-          <h2 className="text-3xl font-bold text-text-primary md:text-4xl">
-            Простые и прозрачные цены
-          </h2>
-          <p className="mt-4 text-lg text-text-secondary">
-            Начните бесплатно, масштабируйтесь по мере роста
-          </p>
-        </FadeIn>
+        <SectionHeader
+          number="05"
+          label="Тарифы"
+          title="Простые и прозрачные цены"
+          description="Начните бесплатно, масштабируйтесь по мере роста"
+        />
 
-        <StaggerContainer className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5"
+        >
           {plans.map((plan) => (
-            <StaggerHoverItem key={plan.name}>
+            <motion.div key={plan.name} variants={itemVariants}>
               <Card
-                variant="bordered"
-                className={`relative flex h-full flex-col ${
+                variant="default"
+                className={`relative flex h-full flex-col bg-bg-primary ${
                   plan.popular
-                    ? "border-accent-primary ring-2 ring-accent-primary/20"
+                    ? "ring-2 ring-brand-primary border-brand-primary"
                     : ""
                 }`}
               >
                 {/* Popular badge */}
                 {plan.popular && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                    <div className="flex items-center gap-1.5 rounded-full bg-accent-primary px-3 py-1 text-xs font-semibold text-accent-contrast">
+                    <div className="flex items-center gap-1.5 rounded-full bg-brand-primary px-3 py-1 text-xs font-semibold text-white">
                       <Sparkles className="h-3 w-3" />
                       Популярный
                     </div>
@@ -150,13 +165,13 @@ export const Pricing = () => {
 
                 {/* Header */}
                 <div className="text-center">
-                  <h3 className="text-lg font-semibold text-text-primary">
+                  <h3 className="font-mono text-sm font-semibold text-text-muted tracking-wider">
                     {plan.name}
                   </h3>
-                  <div className="mt-2 flex items-baseline justify-center gap-1">
+                  <div className="mt-3 flex items-baseline justify-center gap-1">
                     <span
-                      className={`text-3xl font-bold ${
-                        plan.popular ? "text-accent-primary" : "text-text-primary"
+                      className={`font-heading text-3xl lg:text-4xl font-bold ${
+                        plan.popular ? "text-brand-primary" : "text-text-primary"
                       }`}
                     >
                       {plan.price}
@@ -171,7 +186,7 @@ export const Pricing = () => {
                 {/* Features */}
                 <ul className="mt-6 flex-1 space-y-3">
                   {plan.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-start gap-2 text-sm">
+                    <li key={idx} className="flex items-start gap-2.5 text-sm">
                       {feature.included ? (
                         <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-success" />
                       ) : (
@@ -206,24 +221,29 @@ export const Pricing = () => {
                   </Link>
                 </div>
               </Card>
-            </StaggerHoverItem>
+            </motion.div>
           ))}
-        </StaggerContainer>
+        </motion.div>
 
         {/* Footer note */}
-        <FadeIn delay={0.3} className="mt-10 text-center">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3 }}
+          className="mt-10 text-center"
+        >
           <p className="text-sm text-text-muted">
-            Все планы включают GDPR compliance и EU data centers.{" "}
+            Все планы включают российские сервера и защиту данных по 152-ФЗ.{" "}
             <Link
               href={ROUTES.REQUEST}
-              className="text-accent-primary hover:text-accent-hover"
+              className="text-brand-primary hover:text-brand-primary-hover transition-colors"
             >
               Нужна консультация?
             </Link>
           </p>
-        </FadeIn>
+        </motion.div>
       </Container>
     </section>
   );
 };
-

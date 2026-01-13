@@ -13,6 +13,7 @@ const productLinks = [
 const resourceLinks = [
   { href: ROUTES.DOCS, label: "Гайды" },
   { href: "/#faq", label: "FAQ" },
+  { href: "https://api.parmenid.tech/docs", label: "API Docs", external: true },
 ];
 
 const legalLinks = [
@@ -22,20 +23,17 @@ const legalLinks = [
 
 export const Footer = () => {
   return (
-    <footer className="border-t border-border bg-bg-primary py-12">
+    <footer className="border-t border-border bg-bg-primary py-12 lg:py-16">
       <Container>
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-5">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <Link href={ROUTES.HOME} className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent-primary">
-                <span className="text-lg font-bold text-accent-contrast">P</span>
-              </div>
-              <span className="text-lg font-semibold text-text-primary">
-                Parmenid
+            <Link href={ROUTES.HOME} className="group">
+              <span className="text-xl font-bold text-text-primary tracking-tight">
+                parmenid ai
               </span>
             </Link>
-            <p className="mt-4 max-w-sm text-sm text-text-secondary">
+            <p className="mt-4 max-w-sm text-sm text-text-secondary leading-relaxed">
               Создавайте AI-консультантов на документах вашей компании за 5 минут,
               без кода. RAG, Telegram, аналитика.
             </p>
@@ -43,15 +41,15 @@ export const Footer = () => {
 
           {/* Product */}
           <div>
-            <h4 className="mb-4 text-sm font-semibold text-text-primary">
+            <h4 className="mb-4 font-mono text-xs font-semibold uppercase tracking-wider text-text-muted">
               Продукт
             </h4>
-            <ul className="space-y-2">
+            <ul className="space-y-3">
               {productLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-text-secondary transition-colors hover:text-accent-primary"
+                    className="text-sm text-text-secondary transition-colors hover:text-brand-primary"
                   >
                     {link.label}
                   </Link>
@@ -62,18 +60,29 @@ export const Footer = () => {
 
           {/* Resources */}
           <div>
-            <h4 className="mb-4 text-sm font-semibold text-text-primary">
+            <h4 className="mb-4 font-mono text-xs font-semibold uppercase tracking-wider text-text-muted">
               Ресурсы
             </h4>
-            <ul className="space-y-2">
+            <ul className="space-y-3">
               {resourceLinks.map((link) => (
                 <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-text-secondary transition-colors hover:text-accent-primary"
-                  >
-                    {link.label}
-                  </Link>
+                  {"external" in link && link.external ? (
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-text-secondary transition-colors hover:text-brand-primary"
+                    >
+                      {link.label}
+                    </a>
+                  ) : (
+                    <Link
+                      href={link.href}
+                      className="text-sm text-text-secondary transition-colors hover:text-brand-primary"
+                    >
+                      {link.label}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
@@ -81,14 +90,14 @@ export const Footer = () => {
 
           {/* Contacts */}
           <div>
-            <h4 className="mb-4 text-sm font-semibold text-text-primary">
+            <h4 className="mb-4 font-mono text-xs font-semibold uppercase tracking-wider text-text-muted">
               Контакты
             </h4>
-            <ul className="space-y-2">
+            <ul className="space-y-3">
               <li>
                 <a
                   href="mailto:work@parmenid.tech"
-                  className="flex items-center gap-2 text-sm text-text-secondary transition-colors hover:text-accent-primary"
+                  className="flex items-center gap-2 text-sm text-text-secondary transition-colors hover:text-brand-primary"
                 >
                   <Mail className="h-4 w-4" />
                   work@parmenid.tech
@@ -99,7 +108,7 @@ export const Footer = () => {
                   href="https://t.me/parmenid_support"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm text-text-secondary transition-colors hover:text-accent-primary"
+                  className="flex items-center gap-2 text-sm text-text-secondary transition-colors hover:text-brand-primary"
                 >
                   <Send className="h-4 w-4" />
                   @parmenid_support
@@ -112,9 +121,9 @@ export const Footer = () => {
         {/* Bottom */}
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 md:flex-row">
           <p className="text-sm text-text-muted">
-            © {new Date().getFullYear()} Parmenid. Все права защищены.
+            © {new Date().getFullYear()} parmenid ai. Все права защищены.
           </p>
-          <ul className="flex gap-4">
+          <ul className="flex gap-6">
             {legalLinks.map((link) => (
               <li key={link.href}>
                 <Link
@@ -131,4 +140,3 @@ export const Footer = () => {
     </footer>
   );
 };
-

@@ -7,10 +7,10 @@ interface ContainerProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const sizeStyles = {
-  sm: "max-w-3xl",
-  md: "max-w-5xl",
-  lg: "max-w-6xl",
-  xl: "max-w-7xl",
+  sm: "max-w-3xl", // 768px
+  md: "max-w-5xl", // 1024px
+  lg: "max-w-6xl", // 1152px
+  xl: "max-w-[1280px]", // 1280px - F0 spec
 };
 
 export const Container = ({
@@ -21,11 +21,14 @@ export const Container = ({
 }: ContainerProps) => {
   return (
     <div
-      className={cn("mx-auto w-full px-4 md:px-6 lg:px-8", sizeStyles[size], className)}
+      className={cn(
+        "mx-auto w-full px-4 sm:px-6 lg:px-8",
+        sizeStyles[size],
+        className
+      )}
       {...props}
     >
       {children}
     </div>
   );
 };
-
